@@ -1,0 +1,18 @@
+# hostname: zhangjg.github.io
+hostname: dgutyanghs.github.io
+baseurl: /
+#permalink: /blog/:year-:month-:day-:title.html
+markdown: kramdown
+encoding: "utf-8"
+source: [_post/2017]
+paginate: 40
+paginate_path: "/:num/"
+timezone: Asia/Beijing
+defaults:
+    -
+        scope:
+            path: ""
+            type: "posts"
+        values:
+            layout: "default"
+            author: "Alex Yang"
