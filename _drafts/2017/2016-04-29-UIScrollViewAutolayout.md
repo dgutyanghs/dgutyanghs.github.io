@@ -2,15 +2,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfc18126">1. 纯代码解决UIScrollView 的 AutoLayout</a>
+<li><a href="#org986a666">1. 纯代码解决UIScrollView 的 AutoLayout</a>
 <ul>
-<li><a href="#orgea9b7a9">1.1. UIScrollView的特殊性</a></li>
-<li><a href="#org9f18afd">1.2. 解决思路</a>
+<li><a href="#orgca18d3e">1.1. UIScrollView的特殊性</a></li>
+<li><a href="#orgf118a23">1.2. 解决思路</a>
 <ul>
-<li><a href="#org140a1ab">1.2.1. step 1</a></li>
-<li><a href="#orge3e787b">1.2.2. step 2</a></li>
-<li><a href="#orgb66e880">1.2.3. step 3</a></li>
-<li><a href="#org18119da">1.2.4. 结语</a></li>
+<li><a href="#org98066e9">1.2.1. step 1</a></li>
+<li><a href="#org7539d92">1.2.2. step 2</a></li>
+<li><a href="#org1f8ce6f">1.2.3. step 3</a></li>
+<li><a href="#orge74e0f3">1.2.4. 结语</a></li>
 </ul>
 </li>
 </ul>
@@ -18,13 +18,17 @@
 </ul>
 </div>
 </div>
+&#x2014;
+title: 纯代码解决UIScrollView 的 AutoLayout
+&#x2014;
 
-<a id="orgfc18126"></a>
+
+<a id="org986a666"></a>
 
 # 纯代码解决UIScrollView 的 AutoLayout
 
 
-<a id="orgea9b7a9"></a>
+<a id="orgca18d3e"></a>
 
 ## UIScrollView的特殊性
 
@@ -34,12 +38,12 @@
 系统会警告你"Has ambiguous scrollable content width/height".
 
 
-<a id="org9f18afd"></a>
+<a id="orgf118a23"></a>
 
 ## 解决思路
 
 
-<a id="org140a1ab"></a>
+<a id="org98066e9"></a>
 
 ### step 1
 
@@ -56,7 +60,7 @@
     [containView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:scrollView];
 
 
-<a id="orge3e787b"></a>
+<a id="org7539d92"></a>
 
 ### step 2
 
@@ -66,7 +70,7 @@
     self.contentWidthConstraint = contentWidthConstraint;
 
 
-<a id="orgb66e880"></a>
+<a id="org1f8ce6f"></a>
 
 ### step 3
 
@@ -80,7 +84,7 @@
 ok, 大功告成!
 
 
-<a id="org18119da"></a>
+<a id="orge74e0f3"></a>
 
 ### 结语
 
