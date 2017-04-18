@@ -1,0 +1,116 @@
+---
+title: Diary
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ page.title }}</title>
+    <link rel="icon" type="image/png"
+        href="//dgutyanghs.github.io/blog/ref/Me.png"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js">
+    </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+    </script>
+    <style>
+        body {
+          font-family: "Helvetica Neue","Verdana","Arial","Hiragino Sans GB","WenQuanYi Micro Hei","Heiti SC",STHeiti,"Microsoft Yahei",SimSun,sans-serif;
+          font-weight: 300;
+          display: -webkit-flex;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin:0;
+          background:#29C2DA;
+        }
+
+        #content
+        {
+            flex-direction: column;
+            justify-content: center;
+            display: -webkit-flex;
+            align-items: flex-start;
+            display: flex;
+            margin:  1em 1em 1em 0;
+            padding:0 10ex;
+            align-self: center;
+            border-radius: 1ex;
+            padding: 2ex;
+            background: #E5F3CA;
+        }
+        p {
+            text-indent: 2em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Diary
+    </header>
+    <div style="display:flex">
+        <div id="TOC" style="width:22em">
+            <ul>
+            {%for file in site.static_files %}
+                {% if file.extname == ".md64" %}
+                <li> <a class="md64" href="/blog{{file.path}}"> {{ file.path }}</a> </li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+        <div id="content" >
+        </div>
+    </div>
+    <script>
+        function utf8to16(str) {
+            var out, i, len, c;
+            var char2, char3;
+            out = "";
+            len = str.length;
+            i = 0;
+            while(i < len) {
+            c = str.charCodeAt(i++);
+            switch(c >> 4)
+            {
+              case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+                // 0xxxxxxx
+                out += str.charAt(i-1);
+                break;
+              case 12: case 13:
+                // 110x xxxx   10xx xxxx
+                char2 = str.charCodeAt(i++);
+                out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+                break;
+              case 14:
+                // 1110 xxxx  10xx xxxx  10xx xxxx
+                char2 = str.charCodeAt(i++);
+                char3 = str.charCodeAt(i++);
+                out += String.fromCharCode(((c & 0x0F) << 12) |
+                               ((char2 & 0x3F) << 6) |
+                               ((char3 & 0x3F) << 0));
+                break;
+            }
+            }
+            return out;
+        }
+        function load(url){
+            $.get(url,(data,status)=>{
+                if(status == 'success'){
+                    data = atob(data);
+                    data = utf8to16(data);
+                    data = marked(data);
+                    $("#content").html(data);
+                }else{
+                    console.log(status);
+                    console.log(data);
+                }
+            });
+        }
+        $("a.md64").click(function(event){
+            event.preventDefault();
+            var url=$(this).attr("href");
+            load(url);
+        });
+        $("a.md64").last().click();
+    </script>
+</body>
+</html>

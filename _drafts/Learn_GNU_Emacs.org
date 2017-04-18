@@ -1,0 +1,519 @@
+* Charpter 4. Use Buffer, Windows and Frames
+
+1. Emacs calls *GUI windows* /frames/.
+2. Emacs /windows/ are *split screens*.
+3. /windows/ and /frames/ are ways to display a /buffer/.
+4. /buffer/ may contains a copy of a file or not. 
+  Emacs-generated buffers are not files copy.
+
+*** Three way to show all buffers in Emacs
+
+1. The buffer list
+   *C-x C-b*
+2. The Buffers menu
+   *F10* to move the focus to menu on a GUI, or show a menu list in
+   termail, chose the *Buffers* item.
+3. Buffer pop-up menu
+   Holding down *Ctrl* and clicking the left mouse button.
+
+
+All the buffers you create in an Emacs session are active, event you
+can't see them. You can think of them as a *stack of pages*, with the
+one being displayed as the top page. Turn to another page (another
+buffer), use *C-x o*.
+
+** Working with Multiple Buffers
+Create a buffer that contains a file, type *C-x C-f* to find the file.
+
+When you *C-x b*, the * message * buffer get the focus. If you want
+show a created buffer, just type name of the buffer. If you donot
+rember the name of the buffer, type *M-n* or *M-p* to change the
+Buffer List items. If you want to create a new file just type the
+file's name.
+
+*C-k* will kill the buffer you work on. *M-x kill-some-buffers* can
+ use to kill many than one buffer.
+
+** Working with Windows
+
+Windows are areas on the screen in which Emacs displays the buffers
+that you are editing. You can have multiple windows on the screen at
+one time, each displaying a different buffer or different parts of the
+same buffer.
+
+If you have more tow windows, *C-M v* will move the other winodw but
+not need to move to it. If you have more than two windows, the other
+window mean the window which fellow the active window.
+
+*M-1 C-M v* will move the other window down 1 lines. *M--1 C-M v*
+(or *C-u -1 C-M v*) will move up the other window up 1 lines.
+
+*M-x delete-windows-on* can rid of some windows you want to rid them.
+
+** Working with Frames
+
+| Key-struck                  | Command                               | Mean                                       |
+|-----------------------------+---------------------------------------+--------------------------------------------|
+| *C-x 5 o*                   | *other-frame*                         | Move to next frame                         |
+|-----------------------------+---------------------------------------+--------------------------------------------|
+| *C-x 5 0*                   | *delte-frame*                         | Delte the active frame                     |
+|-----------------------------+---------------------------------------+--------------------------------------------|
+| *C-x 5 2*                   | *make-frame*                          | Create a new Frame                         |
+|-----------------------------+---------------------------------------+--------------------------------------------|
+| *C-x 5 f /file-name/ Enter* | *find-file-other-fame*                | For the /file-name/ create a new Frame     |
+|-----------------------------+---------------------------------------+--------------------------------------------|
+| *C-x 5 r*                   | *fine-file-read-only-other-frame*      | Finds a file in a new frame, but it is     |
+|                             |                                       | read-onely                                 |
+|-----------------------------+---------------------------------------+--------------------------------------------|
+| *C-x 5 b*                   | *switch-to-buffer-other-frame*        | To move a buffer and put it in a new frame |
+|-----------------------------+---------------------------------------+--------------------------------------------|
+
+** More About Buffers
+
+*** Saving Multiple Buffers
+*C-x s* can save multiple buffers all at once. Emacs asks you is you
+want to save each buffer that is connected with a file.
+
+Afer type *C-x s* , here is a table , about what will do if you
+ conntinue type.
+
+| Afer type *C-x s* | Actions                                           |
+| your type         |                                                   |
+|-------------------+---------------------------------------------------|
+| y                 | save the current buffer                           |
+|-------------------+---------------------------------------------------|
+| n                 | Not save the current buffer                       |
+|-------------------+---------------------------------------------------|
+| .                 | Just save current buffer                          |
+|-------------------+---------------------------------------------------|
+| !                 | Save all buffers which connected with files       |
+|-------------------+---------------------------------------------------|
+| q                 | quit the *save-some-buffer*, not save the buffers |
+|                   | have not saved                                    |
+|-------------------+---------------------------------------------------|
+| C-r               | The current buffer enters the view mode, so you   |
+|                   | cant look at it. Press q to quit the view mode    |
+|                   | and continue saving buffers.                      |
+|-------------------+---------------------------------------------------|
+
+*** Renming  Buffers
+
+When you are eding a file, the buffer takes on the name of the
+file. If You want you can rename the buffer with a differenr name of
+the file. Rename buffer not change the name of the file which conneced
+whit it.
+
+To rename a buffer, type *M-x rename-buffer*. Emacs asks for the new
+name; type it and press Enter.
+
+Ues rename-buffer, we can runing multiple shell in a Emacs session. At
+first start a command shell, then rename it, and now you can start a
+new command shell. 
+
+*Buffer list Commands*
+
+| Keysstrokes  | Actions                     | Occurs       |
+|--------------+-----------------------------+--------------|
+| C-n, Sapce,  | Move to the buffer          | Immediately  |
+| n or &darr;  | in the list(ie.,            |              |
+|              | Down one line)              |              |
+|--------------+-----------------------------+--------------|
+| C-p, p or    | Move to the previous        |              |
+| &uarr;       | buffer int the list(        | Immediately  |
+|              | i.e., up one line).         |              |
+|--------------+-----------------------------+--------------|
+| d, k         | Marke buffer for deletion.  | When prees x |
+|--------------+-----------------------------+--------------|
+| s            | Save buffer.                | When press x |
+|--------------+-----------------------------+--------------|
+| u            | Unmake buffer.              | Immediately  |
+|--------------+-----------------------------+--------------|
+| x            | Execut other one-letter     |              |
+|              | Commands on all marked      | Immediately  |
+|              | bufffers.                   |              |
+|--------------+-----------------------------+--------------|
+| Del          | Unmake the prevous buffer   |              |
+|              | in the list; if there is    | Immediately  |
+|              | no mark, move up one line.  |              |
+|--------------+-----------------------------+--------------|
+| ~            | Mark buffer as unmodified.  | Immediately  |
+|--------------+-----------------------------+--------------|
+| %            | Toggle read-only status of  |              |
+|              | buffer.                     | Immediately  |
+|--------------+-----------------------------+--------------|
+| 1            | Display buffer in a full    |              |
+|              | screen.                     | Immediately  |
+|--------------+-----------------------------+--------------|
+| 2            | Display this buffer and     |              |
+|              | the next one in horizontal  |              |
+|              | windows                     | Immediately  |
+|--------------+-----------------------------+--------------|
+| f            | Replace buffer list with    |              |
+|              | this buffer.                | Immediately  |
+|--------------+-----------------------------+--------------|
+| o            | Replace other windos with   |              |
+|              | this buffer.                | Immediately  |
+|--------------+-----------------------------+--------------|
+| m            | Marke buffers to be         | When press v |
+|              | displayed in windows        |              |
+|--------------+-----------------------------+--------------|
+| v            | Display buffers marked with |              |
+|              | m; Emacs makes as many      |              |
+|              | Windows as needed.          | Immediately  |
+|--------------+-----------------------------+--------------|
+| q            | Quit buffers list.          | Immediately  |
+|--------------+-----------------------------+--------------|
+
+
+*Buffers Command*
+
+| Keystrokes          | Command name          | Action                          |
+|---------------------+-----------------------+---------------------------------|
+| *C-x b*          qq | *switch-to-buffer*    | Move to the buffer specified    |
+|---------------------+-----------------------+---------------------------------|
+| *C-x &rarr;*        | *next-buffer*         | Move to the next buffer in the  |
+|                     |                       | buffer list                     |
+|---------------------+-----------------------+---------------------------------|
+| *C-x &larr;*        | *previous-buffer*     | Move to the previous buffer in  |
+|                     |                       | the buffer list                 |
+|---------------------+-----------------------+---------------------------------|
+| *C-x C-b*           | *list-buffers*        | Display the buffer list         |
+|---------------------+-----------------------+---------------------------------|
+| *C-x k*             | *kill-buffer*         | Delete the buffer specified     |
+|---------------------+-----------------------+---------------------------------|
+|                     | *kill-some-buffers*   | Ask about deleting each buffer. |
+|---------------------+-----------------------+---------------------------------|
+|                     | *rename-buffer*       | Change the buffer's name to the |
+|                     |                       | name specified.                 |
+|---------------------+-----------------------+---------------------------------|
+| *C-x s*             | *save-some-buffers*   | Ask whether you want to save    |
+|                     |                       | each modified buffer.           |
+|---------------------+-----------------------+---------------------------------|
+| *C-x C-v*           | *find-alternate-file* | Find alternate file replace     |
+|                     |                       | the file contented with current |
+|                     |                       | buffer.                         |
+|---------------------+-----------------------+---------------------------------|
+| *C-x C-q*           | *read-only-mod*       | Take on/off read-only-mode      |
+|                     |                       | on current buffer.              |
+|---------------------+-----------------------+---------------------------------|
+| *C-x 4 r*           | *find-file-read-*     | Find a file open it whith read  |
+|                     | *only-other-winodw*.  | only mode in a new winodw.      |
+|---------------------+-----------------------+---------------------------------|
+| *C-x 5 r*           | *find-file-read-*     | Find a file, open it whith read |
+|                     | *only-other-frame*    | only mode in a new frame.       |
+|---------------------+-----------------------+---------------------------------|
+
+** More About Winodows
+
+*Window Commands*
+
+| KeyStrokes | Command name    | Actions                    |
+|------------+-----------------+----------------------------|
+| C-x 2      | split-window-   | Divide current window into |
+|            | vertically      | two windows, one above the |
+|            |                 | other.                     |
+|------------+-----------------+----------------------------|
+| C-x 3      | split-window-   | Divide current window into |
+|            | horizontally    | two side-by-side windows.  |
+|------------+-----------------+----------------------------|
+| C-x >      | scroll-right    | Scroll the window right.   |
+|------------+-----------------+----------------------------|
+| C-x <      | scroll-left     | Scroll the window left.    |
+|------------+-----------------+----------------------------|
+| C-x o      | other-window    | Move to the other window;  |
+|            |                 | if there are several, move |
+|            |                 | to the next window         |
+|------------+-----------------+----------------------------|
+| C-x 0      | delete-window   | Delete the current window  |
+|------------+-----------------+----------------------------|
+| C-x 1      | delete-other-   | Delete all windows but     |
+|            | window          | this one.                  |
+|------------+-----------------+----------------------------|
+|            | delete-         | Delete all windows on a    |
+|            | windows-on      | given buffer.              |
+|------------+-----------------+----------------------------|
+| C-x ^      | enlarge-window  | Make window taller.        |
+|------------+-----------------+----------------------------|
+|            | shrink-window   | Make window shorter.       |
+|------------+-----------------+----------------------------|
+| C-x }      | enlarge-window- | Make window wider.         |
+|            | horizontally    |                            |
+|------------+-----------------+----------------------------|
+| C-x {      | shrink-window-  | Make window narrower.      |
+|            | horizontally    |                            |
+|------------+-----------------+----------------------------|
+| C-x -      | shrink-window-  | Make window smaller if     |
+|            | if-larger-than- | buffer is smaller than     |
+|            | buffer          | window.                    |
+|------------+-----------------+----------------------------|
+| C-x +      | blance-windows  | Make Windows the same size |
+|------------+-----------------+----------------------------|
+| C-M-v      | scroll-other-   | Scroll other window.       |
+|            | window          |                            |
+|------------+-----------------+----------------------------|
+| C-x 4 f    | find-file-      | Find a file in the other   |
+|            | other-window    | window.                    |
+|------------+-----------------+----------------------------|
+| C-x 4 b    | switch-to-      | Select a buffer in the     |
+|            | buffer-other-   | other window.              |
+|            | window          |                            |
+|------------+-----------------+----------------------------|
+|            | compare-windows | Compare this window with   |
+|            |                 | the next window and show   |
+|            |                 | the first difference.      |
+|------------+-----------------+----------------------------|
+|            |                 |                            |
+
+** Holding Your Place with Bookmarks
+
+Bookmakres proviede a convenient way of marking your place in a file,
+a place you can easily return to.
+
+*Command of bookmark list*
+
+| The commad after   | Action                       |
+| You type *C-x r l* |                              |
+|--------------------+------------------------------|
+| Enter,f, or j      | Go to the bookmark           |
+|                    | on the current line.         |
+|--------------------+------------------------------|
+| C-o or o           | Open the bookmark on         |
+|                    | the current line in          |
+|                    | another winodw; o            |
+|                    | moves the curesor to         |
+|                    | that window; C-o keeps       |
+|                    | the cursor in current        |
+|                    | window.                      |
+|--------------------+------------------------------|
+| d,C-d, or k        | Flag bookmark for deletion.  |
+|--------------------+------------------------------|
+| r                  | Rename bookmark.             |
+|--------------------+------------------------------|
+| s                  | Save all bookmarks listed.   |
+|--------------------+------------------------------|
+| m                  | Mark bookmarks to be         |
+|                    | displayed in multiple        |
+|                    | windows.                     |
+|--------------------+------------------------------|
+| v                  | Display marked bookmarks or  |
+|                    | the one the cursor is on if  |
+|                    | none are marked.             |
+|--------------------+------------------------------|
+| t                  | Toggle display of paths to   |
+|                    | files associated with        |
+|                    | bookmarks.                   |
+|--------------------+------------------------------|
+| w                  | In the minibuffer, display   |
+|                    | location of file associated  |
+|                    | with bookmark.               |
+|--------------------+------------------------------|
+| x                  | Delete bookmarks flagged for |
+|                    | Deletion.                    |
+|--------------------+------------------------------|
+| u                  | Remove mark from bookmark.   |
+|--------------------+------------------------------|
+| Del                | Remove makr from bookmark on |
+|                    | previous line or move to the |
+|                    | previous line (if there is   |
+|                    | no mark).                    |
+|--------------------+------------------------------|
+| q                  | Exit bookmark list.          |
+|--------------------+------------------------------|
+| Space or n         | Move down a line.            |
+|--------------------+------------------------------|
+| p                  | Move up a line.              |
+|--------------------+------------------------------|
+| l                  | Load a bookmark file (other  |
+|                    | than the default).           |
+|--------------------+------------------------------|
+| A                  | Display all annotations.     |
+|--------------------+------------------------------|
+| a                  | Diaplay annotations for      |
+|                    | current bookmark.            |
+|--------------------+------------------------------|
+| e                  | Edit (or create) annotations |
+|                    | for the current bookmark.    |
+
+
+
+*Bookmark commands*
+| Keystruck | Command          | Active                |
+|-----------+------------------+-----------------------|
+| C-x r m   | bookmark-set     | Set a bookmark at the |
+|           |                  | current cursor.       |
+|-----------+------------------+-----------------------|
+| C-x r b   | bookmark-jump    | Jump to a bookmark.   |
+|-----------+------------------+-----------------------|
+|           | bookmark-rename  | Reaname a bookmark.   |
+|-----------+------------------+-----------------------|
+|           | bookmark-delete  | Delete a bookmark.    |
+|-----------+------------------+-----------------------|
+|           | bookmark-save    | Save all bookmarks    |
+|           |                  | in default file.      |
+|-----------+------------------+-----------------------|
+| C-x r l   | bookmakr-menu-   |                       |
+|           | list             | Move to =*Bookmark    |
+|           |                  | List*= buffer.        |
+|-----------+------------------+-----------------------|
+|           | bookmark-insert  | Insert full text of   |
+|           |                  | file associated with  |
+|           |                  | a given bookmark.     |
+|-----------+------------------+-----------------------|
+|           | bookmakr-wirte   | Save all bookmarks in |
+|           |                  | a specified file.     |
+|-----------+------------------+-----------------------|
+|           | bookmakr-load    | Load bookmarks from   |
+|           |                  | specified file.       |
+|-----------+------------------+-----------------------|
+|           | bookmark-insert- | Insert the path to a  |
+|           | location         | give bookmark at the  |
+|           |                  | cursor position.      |
+|-----------+------------------+-----------------------|
+
+
+* Chapter 5. Emacs as a Work Environment
+
+*Shell mode commands*
+
+| Keystrokes | Command name  | Action                    |
+|------------+---------------+---------------------------|
+|            | shell         | Enter shell mode.         |
+|------------+---------------+---------------------------|
+| C-c C-c    | comint-       | Interrup current          |
+|            | interrupt-    | job; equivalent to        |
+|            | subjob        | C-c in Unix shell.        |
+|------------+---------------+---------------------------|
+| C-d        | comint-       | Send EOF character        |
+|            | delchar-      | if  at end of             |
+|            | or-maybe-     | buffer; delete a          |
+|            | eof           | character elsewhere.      |
+|------------+---------------+---------------------------|
+| C-c C-d    | comint-       | Send EOF character.       |
+|            | send-eif      |                           |
+|------------+---------------+---------------------------|
+| C-c C-u    | comint-       | Erase current line;       |
+|            | kill-input    | equivalent to C-u         |
+|            |               | in Unix shells.           |
+|------------+---------------+---------------------------|
+| C-c C-z    | comint-stop-  | Suspend or stop a         |
+|            | subjob        | job; C-z in Unix shells.  |
+|------------+---------------+---------------------------|
+| M-p        | comint-       | Retrieve previous         |
+|            | previous-     | commands (can be          |
+|            | input         | repeated to find earlier  |
+|            |               | commands).                |
+|------------+---------------+---------------------------|
+| M-n        | comint-next-  | Retrieve subsequent       |
+|            | input         | commands (can be          |
+|            |               | repeated to find more     |
+|            |               | recent commands).         |
+|------------+---------------+---------------------------|
+| Enter      | comint-send-  | Send input on current     |
+|            | input         | line.                     |
+|------------+---------------+---------------------------|
+| Tab        | comint-       | Complete current          |
+|            | dynamic-      | command, filename, or     |
+|            | complete      | variable name.            |
+|------------+---------------+---------------------------|
+| C-c C-o    | comint-       | Delete output from last   |
+|            | kill-output   | command.                  |
+|------------+---------------+---------------------------|
+| C-c C-r    | comint-       | Move first line of ouput  |
+|            | show-         | to top of window.         |
+|            | output        |                           |
+|------------+---------------+---------------------------|
+| C-c C-e    | comint-       | Move last line of ouput   |
+|            | show-         | to bottom of window.      |
+|            | maximum-      |                           |
+|            | ouput         |                           |
+|------------+---------------+---------------------------|
+| C-c C-p    | comint-       | Move to previous          |
+|            | previous-     | command.                  |
+|            | prompt        |                           |
+|------------+---------------+---------------------------|
+| C-c C-n    | comint-       | Move to next command.     |
+|            | next-         |                           |
+|            | prompt        |                           |
+|------------+---------------+---------------------------|
+| M-!        | shell-command | Run a shell command,      |
+|            |               | command output show in    |
+|            |               | minibuffer.               |
+|------------+---------------+---------------------------|
+| C-u M-!    |               | Run a shell command,      |
+|            |               | insert the command output |
+|            |               | in current buffer.        |
+
+** Use dired mode
+
+| Keystrokes | Command         | Action                               |
+|            | name            |                                      |
+|------------+-----------------+--------------------------------------|
+| C-x d      | dired           | Start Dired.                         |
+|------------+-----------------+--------------------------------------|
+| A          | dired-          | Do a regular expression search       |
+|            | do-search       | on                                   |
+|------------+-----------------+--------------------------------------|
+| B          | dired-do-       | Byte-compile file.                   |
+|            | byte-compile    |                                      |
+|------------+-----------------+--------------------------------------|
+| C          | dired-do-       | Copy file.                           |
+|            | copy            |                                      |
+|------------+-----------------+--------------------------------------|
+| e          | dired-find-     | Edit file.                           |
+|            | file            |                                      |
+|------------+-----------------+--------------------------------------|
+| f          | dired-find-     | Find (so you can edit) file.         |
+|            | advertised-     |                                      |
+|            | find-file       |                                      |
+|------------+-----------------+--------------------------------------|
+| g          | revert-buffer   | Reread the directory from disk.      |
+|------------+-----------------+--------------------------------------|
+| G          | dired-do-       | Change group permissions.            |
+|            | chgrp           |                                      |
+|------------+-----------------+--------------------------------------|
+| h          | describe-mode   | Display descriptive help text        |
+|            |                 | for Dired.                           |
+|------------+-----------------+--------------------------------------|
+| H          | dired-to-       | Create a hard link to this file;     |
+|            | hardlink        | Emacs asks you to name the hard      |
+|            |                 | link (not all OSes support hard      |
+|            |                 | links).                              |
+|------------+-----------------+--------------------------------------|
+| i          | dired-maybe-    | Add a listing of this subdirectory   |
+|            | insert-subdir   | to the current dired buffer; if      |
+|            |                 | it's already there, just move to it. |
+|------------+-----------------+--------------------------------------|
+| k          | dired-do-       | Remove line from display (don't      |
+|            | kill-lines      | delete file).                        |
+|------------+-----------------+--------------------------------------|
+| L          | dired-do-load   | Load file.                           |
+|------------+-----------------+--------------------------------------|
+| m or *m    | dired-makr      | Mark with *                          |
+|------------+-----------------+--------------------------------------|
+| M          | dired-do-chmod  | Use chmod command on this file.      |
+|------------+-----------------+--------------------------------------|
+| n          | dired-next-line | Move to next line.                   |
+|------------+-----------------+--------------------------------------|
+| o          | dired-fine-     | Find file in another window; move    |
+|            | file-other-     | there.                               |
+|            | window          |                                      |
+|------------+-----------------+--------------------------------------|
+| C-o        | dired-display-  | Find file in another window; don't   |
+|            | file            | move here.                           |
+|------------+-----------------+--------------------------------------|
+| O          | dired-do-chown  | Change ownership of file.            |
+|------------+-----------------+--------------------------------------|
+| p          | dired-previous- | Move up a line.                      |
+|            | line            |                                      |
+|------------+-----------------+--------------------------------------|
+| P          | dired-do-print  | Print file.                          |
+|------------+-----------------+--------------------------------------|
+| q          | quit-window     | Quit Dired.                          |
+|------------+-----------------+--------------------------------------|
+| Q          | dired-do-query- | Query replace string in marked       |
+|            | replace         | files.                               |
+|------------+-----------------+--------------------------------------|
+| R          | dired-do-rename | Rename file.                         |
+|------------+-----------------+--------------------------------------|
+|            |                 |                                      |
+

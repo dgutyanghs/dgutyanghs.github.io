@@ -1,0 +1,225 @@
+* 过程抽象
+** 1.1
+这个练习基本没有难度, 就是看看是不是理解了, 基本的算数操作符, cond, if 的意义, 以及前缀表达. 
+#+BEING_scheme
+10;=> 10
+(+ 5 3 4);=>12
+(- 9 1);=>8
+(/ 6 2);=>3
+(+ (* 2 4) (- 4 6));=>6
+(define a 3);=> unspeical
+(define b (+ a 1));=> unspeical
+(+ a b (* a b));=> same as (+ 3 4 (* 3 4))=>19
+(= a b);=>#f
+(if (and (> b a) (< b (* a b)))
+    b
+    a);=>4
+(cond ((= a 4) 6)
+      ((= b 4) (+ 6 7 a))
+      (else 25));17
+(+2 (if (> b a ) b a));6
+(* cond ((> a b) a)
+        ((< a b) b)
+        (else -1)
+   (+ a 1));16
+#+END_scheme
+** 1.2
+把下列数算把scheme表达:
+$$
+\frac{5+4+(2-3-(6+\frac{4}{5})))}{3(6-2)(2-7)}
+$$
+这个基本上就是要要求熟悉前缀表达.
+
+#+begin_scheme
+(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))
+   (* 3 
+      (- 6 2)
+      (- 2 7)))
+#+end_scheme
+** 1.3 
+定义一个有三个此参数的过程, 返回参数中较大的两个数的和.
+
+这个题目好像有点难, 这个问题很容易泛化, 就是对于给定的 3 个以上的参数, 求其中最大和次大的两个数的和. 如果是那样的话, 就必须首相对所有的参数排序, 然后在获取最大和次大的两个参数. 现在问题明说了就是三个参数, 当然也可以对三个参数排序, 然后求最大和次大的两个数之和.问题是, 到现在为止还没有学习如何存储和检索一个列表的内容, 所以如果从这个思路就走不通了.
+
+但是, 如果我们只是考虑三个参数, 那么, 其实三个数全排卵, 也没有多少组合嘛. 那么我们使用 cond 做分类分析就 OK 了.
+
+#+begin_scheme
+(define (<= a b c)
+  (and (or (< a b)
+           (= a b))
+       (or (< b c)
+           (= b c))))
+
+(define (bigger-sum a b c)
+  (cond ((or (<= a b c)
+             (<= a c b))
+         (+ b c))
+        ((or (<= b a c)
+             (<= b c a))
+         (+ a c))
+        (else (+ a c))))
+#+end_scheme
+** 1.4
+这个习题也非常的简单, 无非就是为了告诉我们, 操作符(函数) 可以作为参数返回.
+#+begin_scheme
+(define (a-plus-abs-b a b)
+ ((if (> b 0) + -) a b))
+#+end_scheme
+a 加 b 的绝对值. 用数学表示就是:
+$$
+a+|b|=a\begin{cases}
++ b & b > 0 \\
+- b & b < 0
+\end{cases}
+$$
+把这个数学式子写成 scheme 就是题目中的代码了. 关键就在于, a b 的操作符由 b 的正负决定.
+** 1.5
+对于应用顺序, 首先计算的是参数的值, 而 ~(test 0 (p))~ 调用的第二个参数是对 p 函数的调用, 这个函数有自己调用自己, 就会陷入循环不会返回. 因为第二个参数没有机会返回, 所以 ~(test 0 (p))~ 的计算没有机会进入 test 函数的函数体中. 对于应用顺序, 调用会使得程序进入无限循环.
+
+而常规顺序, 只有在参数需要计算的时候, 才会做计算, 那么 ~(test 0 (p))~ 就会首先进入到test 函数体中, 执行其中的 if 语句后, 立刻返回了0 , 第二个参数的值是什么, 根本不影响结果, 而且也不会被计算. 所以常规顺序, 返回的结果是 0.
+** 1.6
+这样改动后, if-new 是一个函数, 那么在应用顺序中, 所有的参数都会被计算, 这样 if-new 参数的第三个参数无论如何都会被计算的. 这样就失去了当猜测的值足够好的时候自动停止调用.
+
+但是这个改动, 如果放在正规顺序的解释器中运行的话, 其实可以按照 Alyssa P. Hacker 的设想来运行.
+** 1.7
+#+begin_scheme
+(define (good-enough? guess x)
+  (< (abs (- (square guess) x)) 0.001))
+#+end_scheme
+这样定义的 ~good-enouth?~ 实际就是要求 guess 的平方位于:$(x-0.001,x+0.001)$. 而 x 和 0.001 是什么关系, 我们有不知道, 如果 x >> 0.001 , 那么这个范围就非常的小, 如果这个范围小到计算机无法表示, 那么实际上就变成了一个固定的数值, 而不是一个范围了. 相反, 如果 x ~ 0.001 甚至 x << 0.001 , 那么这个时候, 这个范围的大小, 相对与 x 来说, 就是一个非常大的范围了, 那么就不适合用作控制精度了.
+
+例如计算 0.0001 的平方, 现在的算法使得, guess 远大于 0.01 的时候就停止了.
+
+#+begin_scheme
+(define (good-enough? guess next-guess)
+   (< (/ (abs (- guess next-guess))
+         guess)
+         0.001))
+(define (improve guess x)
+  (/ (+ guess (/ x guess)) 2))
+(define (sqrt-iter guess next x)
+  (if (good-enough? guess next)
+     guess
+     (sqrt-iter next (improve next x) x)))
+(define (square-root x)
+  (square-root 1 (improve 1 x)))
+#+end_scheme
+
+对于一个大数来说, 它的 0.001 和的精度相比, 依然还是一个大数.
+
+** 1.8
+#+begin_scheme
+(define (good-engouth? x guess)
+  (< (abs (- guess (* x x x))) 0.001))
+
+(define (improve guess x)
+ (/
+   (+
+     (/ x (* guess guess))
+     (* 2 guess))
+   3))
+(define (cube-root-iter guess x)
+ (if (good-engouth? x guess)
+    guess
+    (cube-root-iter (improve guess x) x)))
+(define (cube-root x)
+   (cube-root-iter 1.0 x))
+#+end_scheme
+** 1.9
+#+begin_scheme
+(define (+ a b)
+  (if (= a 0) 
+      b
+      (inc (+ (dec a) b))))
+#end_scheme
+这个定义是一个递归定义. 最终要把 ~(+ a b)~ 展开为 
+$$
+a + b = (inc (inc (inc ... (inc b))));a 个 inc 操作
+$$
+占用的内存数量, 显然是和 a 的大小成正比的. 所以这个是一个线性递归进程.
+
+第二个算法
+#+begin_scheme
+(define (+ a b)
+   (if (= a 0)
+       b
+       (+ (dec a) (inc b))))
+#+end_scheme
+这个方法是一个迭代的方法,  ~dec~ 在 a 上作用 a 次的同时, 就完成了 ~inc~ 在 b 上作用 a 次的操作了. 内存的消耗是不增长的.
+
+这个练习让我们看到即使都是一样的操作, 甚至程序的大的构架一样的情况下, 稍微的调整就能对程序的性能做出巨大的改变. 当然了, 更加根本的还是要让我们理解清楚递归和迭代的差异. 从本质上来说, 迭代每次都完成通向最后结果的一个小步, 而递归却没有完成, 一个独立的步骤, 递归是要等待终结的条件出现后才完成最后的运算的.
+** 1.10
+#+begin_scheme
+(define (A x y)
+  (cond ((= y 0) 0)
+        ((= x 0) (* 2 y))
+        ((= y 1) 2)
+        (else (A (- x 1) (A x (- y 1))))))
+(define (f n) (A 0 n))
+(define (g n) (A 1 n))
+(define (h n) (A 2 n))
+#+end_scheme
+首先看见 ~(f n)~, 这个应该是不难得到答案的. $(f n)=2n$.
+
+~(g n)~ 稍微的有一点难度.
+根据定义, 不难发现$g(n) = A(1,n)=2A(1, n-1)=2g(n-1)$, 所以 g(n) 是以 2 为公比的对比数列. g(0)=0, g(1)=2, 显然 g(0) 是不满足公比数量的, 所以
+$$
+g(n) =\begin{cases}
+0 &n =0;
+2^{n} & n > 0
+\end{cases}
+$$
+
+对与 ~(h n)~, 根据定义, 得到:
+$$
+h_n= A(2, n)\\
+   =\begin{case}
+   0 & n=0\\
+   2 & n=1\\
+   A(1, A(2, n-1)=g(A(2, n-1)) = g(h_{n-1}) & n >1
+$$
+也就是说有递归定义: h_n= g(h_{n-1})= 2^{h_(n-1)}.
+$h_0=0, h_1=2;h_2=2^{2};h_3=2^{2^2}$
+h_{n} 就是有 n 个 2 以幂的形式形成的状式子.
+
+
+** 1.11
+#+begin_scheme
+(define (f-recursive n)
+  (if (< n 3)
+      n
+      (+ (f-recursive (- n 1))
+         (* 2 (f-recursive (- n 2)))
+         (* 3(f-recursive (- n 3))))))
+
+(define (f-iter n)
+  (define (iter i fn-1 fn-2 fn-3)
+     (if (> i n)
+         fn-1
+         (iter (+ 1 i)
+               (+ fn-1
+                  (* 2 fn-2)
+                  (* 3 fn-3))
+                fn-1
+                fn-2))))
+#+end_scheme
+** 1.12
+#+begin_scheme
+(define (pascal-triangle row clo)
+   (if (or (= 1 clo)
+           (= row clo))
+       1
+       (+ (pascal-triangle (- row 1) (- clo 1))
+          (pascal-triangle (- row 1) clo))))
+#+end_scheme
+
+** 1.15
+在解答这个题目之前, 我们需要首先思考$log_3{}x$ 是什么意义? 比如 $log_3{} 9=2$ 这里的 2 表示的是什么? 通过指数来将就是 $3^{2} = 9$, 就是2 个 3 连续相乘等于 9. 这个说法放过来说就是 9 连续除以 3, 2 次之后等于1.
+
+根据 ~sine~ 的定义, 对 p 的调用次数, 实际上是问连续对 agnle 除以 3 需要多少次, 才能是商小于 0.1?
+
+a/3 = 0.1 b/3 = 1 那么 b = a*10; 所以, 实际上问题就编程了, log_{3}(10n)= 4.369 , 所以答案就是 5.
+
+(define (cube x) (* x x x))
+(define (p x) (- (* 3 x)(* 4 (cube x))))
+(define (sine angle)
