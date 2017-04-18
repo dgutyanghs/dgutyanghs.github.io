@@ -32,7 +32,8 @@ title :  纯代码编写UIScrollView 的 AutoLayout
 *** step 2
   保存下面的NSLayoutConstraint,如果scrollView的宽度变化(如:网络请求回来的内容增加了),则需要更新此约束.
 #+BEGIN_EXAMPLE
-    NSLayoutConstraint *contentWidthConstraint = [containView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:scrollView];
+    NSLayoutConstraint *contentWidthConstraint =  
+       [containView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:scrollView];
     self.contentWidthConstraint = contentWidthConstraint;
 #+END_EXAMPLE
 *** step 3
