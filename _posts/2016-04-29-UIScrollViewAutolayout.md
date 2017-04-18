@@ -1,7 +1,6 @@
 ---
 layout: default
-title: Benighted on the Ben.
-excerpt: An unplanned bivouac on Ben Nevis.
+title: UIScrollView AutoLayout 
 ---
 
 <div id="table-of-contents">
