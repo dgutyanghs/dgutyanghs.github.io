@@ -1,5 +1,5 @@
 ---
-title :  纯代码编写UIScrollView 的 AutoLayout
+title  :  纯代码编写UIScrollView 的 AutoLayout
 layout : default
 ---
 
