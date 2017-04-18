@@ -1,13 +1,3 @@
-#+STARTUP: showall indent
-#+STARTUP: hidestars
-
-#+BEGIN_HTML
----
-layout : default
-title :  纯代码编写UIScrollView 的 AutoLayout
----
-#+END_HTML
-
 * 纯代码编写UIScrollView 的 AutoLayout 
 ** UIScrollView的特殊性
    相对于普通的View来说, UIScrollView 的AutoLayout 比较特殊.
@@ -17,8 +7,8 @@ title :  纯代码编写UIScrollView 的 AutoLayout
 ** 解决思路
 *** step 1 
   在scrollView和它的subviews之间,先添加一个 containView,
-对齐scrollview的*top* & *leading*边界,
- scrollView的*width* & *height* 对齐containView,
+对齐scrollview的 *top* & *leading* 边界,
+ scrollView的 *width* & *height* 对齐containView,
 从而使scrollView 的 *contentSize*确定下来. (contentSize的大小等于containView.size)
 见以下代码:(使用了 [[https://github.com/purelayout][PureLayout ]] )
 #+BEGIN_EXAMPLE

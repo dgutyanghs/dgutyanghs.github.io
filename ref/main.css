@@ -6,7 +6,7 @@ body {
   flex-direction: column;
   align-items: center;
   margin:0;
-  background:#29C2DA;
+  background:#a795e3;
 }
 
 #content
@@ -18,15 +18,17 @@ body {
     display: flex;
     margin:  3em;
     padding:0 10ex;
-    align-self: center;
+    /* align-self: center; */
+    align-self:left;
     width: 80%;
     /* width: 750px; */
     border-radius: 1ex;
     padding: 2ex;
-    background: #E5F3CA;
+    background:#fffacd;
 }
+
 code.highlighter-rouge {
-    background: #f7f7f7;
+    background: #9797f7;
 }
 footer
 {

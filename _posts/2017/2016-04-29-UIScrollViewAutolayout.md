@@ -2,19 +2,20 @@
 title: 纯代码编写UIScrollView 的 AutoLayout
 layout: default
 ---
+
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga73501d">1. 纯代码编写UIScrollView 的 AutoLayout</a>
+<li><a href="#org7fe4db0">1. 纯代码编写UIScrollView 的 AutoLayout</a>
 <ul>
-<li><a href="#orgeba8714">1.1. UIScrollView的特殊性</a></li>
-<li><a href="#org2c86b3b">1.2. 解决思路</a>
+<li><a href="#org093e973">1.1. UIScrollView的特殊性</a></li>
+<li><a href="#org82e50b8">1.2. 解决思路</a>
 <ul>
-<li><a href="#orged8de00">1.2.1. step 1</a></li>
-<li><a href="#org89c75ce">1.2.2. step 2</a></li>
-<li><a href="#orgb3f6e1f">1.2.3. step 3</a></li>
-<li><a href="#org6369326">1.2.4. 结语</a></li>
+<li><a href="#org39fc942">1.2.1. step 1</a></li>
+<li><a href="#orgf2d5e64">1.2.2. step 2</a></li>
+<li><a href="#orgf9b2b18">1.2.3. step 3</a></li>
+<li><a href="#orgc212543">1.2.4. 结语</a></li>
 </ul>
 </li>
 </ul>
@@ -22,21 +23,13 @@ layout: default
 </ul>
 </div>
 </div>
-<div class="HTML">
-&#x2014;
-layout : default
-title :  纯代码编写UIScrollView 的 AutoLayout
-&#x2014;
 
-</div>
-
-
-<a id="orga73501d"></a>
+<a id="org7fe4db0"></a>
 
 # 纯代码编写UIScrollView 的 AutoLayout
 
 
-<a id="orgeba8714"></a>
+<a id="org093e973"></a>
 
 ## UIScrollView的特殊性
 
@@ -46,18 +39,18 @@ title :  纯代码编写UIScrollView 的 AutoLayout
 系统会警告你"Has ambiguous scrollable content width/height".
 
 
-<a id="org2c86b3b"></a>
+<a id="org82e50b8"></a>
 
 ## 解决思路
 
 
-<a id="orged8de00"></a>
+<a id="org39fc942"></a>
 
 ### step 1
 
   在scrollView和它的subviews之间,先添加一个 containView,
-对齐scrollview的\*top\* & **leading\*边界,
- scrollView的\*width** & **height** 对齐containView,
+对齐scrollview的 **top** & **leading** 边界,
+ scrollView的 **width** & **height** 对齐containView,
 从而使scrollView 的 \*contentSize\*确定下来. (contentSize的大小等于containView.size)
 见以下代码:(使用了 [PureLayout ](https://github.com/purelayout) )
 
@@ -68,7 +61,7 @@ title :  纯代码编写UIScrollView 的 AutoLayout
     [containView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:scrollView];
 
 
-<a id="org89c75ce"></a>
+<a id="orgf2d5e64"></a>
 
 ### step 2
 
@@ -79,7 +72,7 @@ title :  纯代码编写UIScrollView 的 AutoLayout
     self.contentWidthConstraint = contentWidthConstraint;
 
 
-<a id="orgb3f6e1f"></a>
+<a id="orgf9b2b18"></a>
 
 ### step 3
 
@@ -93,7 +86,7 @@ title :  纯代码编写UIScrollView 的 AutoLayout
 ok, 大功告成!
 
 
-<a id="org6369326"></a>
+<a id="orgc212543"></a>
 
 ### 结语
 
