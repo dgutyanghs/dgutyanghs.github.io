@@ -1,6 +1,6 @@
 ---
-layout: default
-title: UIScrollView AutoLayout 
+layout : default
+title : UIScrollView AutoLayout 
 ---
 
 <div id="table-of-contents">
