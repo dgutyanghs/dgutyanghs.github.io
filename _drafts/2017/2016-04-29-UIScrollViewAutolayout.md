@@ -1,22 +1,16 @@
----
-layout: default
-title: Benighted on the Ben.
-excerpt: An unplanned bivouac on Ben Nevis.
----
-
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org29993a4">1. 纯代码解决UIScrollView 的 AutoLayout</a>
+<li><a href="#org5d749ac">1. 纯代码编写UIScrollView 的 AutoLayout</a>
 <ul>
-<li><a href="#org8cffbd7">1.1. UIScrollView的特殊性</a></li>
-<li><a href="#org5d7a118">1.2. 解决思路</a>
+<li><a href="#orgd13ee8f">1.1. UIScrollView的特殊性</a></li>
+<li><a href="#org174a5b9">1.2. 解决思路</a>
 <ul>
-<li><a href="#org5cfb007">1.2.1. step 1</a></li>
-<li><a href="#org703033b">1.2.2. step 2</a></li>
-<li><a href="#org77c8a42">1.2.3. step 3</a></li>
-<li><a href="#org1a05b71">1.2.4. 结语</a></li>
+<li><a href="#orgba59037">1.2.1. step 1</a></li>
+<li><a href="#orgd020f40">1.2.2. step 2</a></li>
+<li><a href="#org3085e1c">1.2.3. step 3</a></li>
+<li><a href="#orgb271374">1.2.4. 结语</a></li>
 </ul>
 </li>
 </ul>
@@ -24,14 +18,21 @@ excerpt: An unplanned bivouac on Ben Nevis.
 </ul>
 </div>
 </div>
+<div class="HTML">
+&#x2014;
+layout : default
+title :  纯代码编写UIScrollView 的 AutoLayout
+&#x2014;
+
+</div>
 
 
-<a id="org29993a4"></a>
+<a id="org5d749ac"></a>
 
-# 纯代码解决UIScrollView 的 AutoLayout
+# 纯代码编写UIScrollView 的 AutoLayout
 
 
-<a id="org8cffbd7"></a>
+<a id="orgd13ee8f"></a>
 
 ## UIScrollView的特殊性
 
@@ -41,12 +42,12 @@ excerpt: An unplanned bivouac on Ben Nevis.
 系统会警告你"Has ambiguous scrollable content width/height".
 
 
-<a id="org5d7a118"></a>
+<a id="org174a5b9"></a>
 
 ## 解决思路
 
 
-<a id="org5cfb007"></a>
+<a id="orgba59037"></a>
 
 ### step 1
 
@@ -54,7 +55,7 @@ excerpt: An unplanned bivouac on Ben Nevis.
 对齐scrollview的\*top\* & **leading\*边界,
  scrollView的\*width** & **height** 对齐containView,
 从而使scrollView 的 \*contentSize\*确定下来. (contentSize的大小等于containView.size)
-见以下代码:(使用了[PureLayout开源lib)](https:https://github.com/PureLayout/PureLayout)
+见以下代码:(使用了 [PureLayout ](https://github.com/purelayout) )
 
     [containView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:scrollView];
     [containView autoPinEdge:ALEdgeTop  toEdge:ALEdgeTop  ofView:scrollView];
@@ -63,7 +64,7 @@ excerpt: An unplanned bivouac on Ben Nevis.
     [containView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:scrollView];
 
 
-<a id="org703033b"></a>
+<a id="orgd020f40"></a>
 
 ### step 2
 
@@ -73,7 +74,7 @@ excerpt: An unplanned bivouac on Ben Nevis.
     self.contentWidthConstraint = contentWidthConstraint;
 
 
-<a id="org77c8a42"></a>
+<a id="org3085e1c"></a>
 
 ### step 3
 
@@ -87,7 +88,7 @@ excerpt: An unplanned bivouac on Ben Nevis.
 ok, 大功告成!
 
 
-<a id="org1a05b71"></a>
+<a id="orgb271374"></a>
 
 ### 结语
 

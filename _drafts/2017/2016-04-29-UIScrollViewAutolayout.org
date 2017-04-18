@@ -1,14 +1,14 @@
 #+STARTUP: showall indent
 #+STARTUP: hidestars
+
 #+BEGIN_HTML
 ---
-layout: default
-title: Benighted on the Ben.
-excerpt: An unplanned bivouac on Ben Nevis.
+layout : default
+title :  纯代码编写UIScrollView 的 AutoLayout
 ---
 #+END_HTML
 
-* 纯代码解决UIScrollView 的 AutoLayout 
+* 纯代码编写UIScrollView 的 AutoLayout 
 ** UIScrollView的特殊性
    相对于普通的View来说, UIScrollView 的AutoLayout 比较特殊.
 因为它的 left/right/top/bottom space 是相对于 UIScrollView的 contentSize 而不是 bounds 来确定的.
@@ -20,7 +20,7 @@ excerpt: An unplanned bivouac on Ben Nevis.
 对齐scrollview的*top* & *leading*边界,
  scrollView的*width* & *height* 对齐containView,
 从而使scrollView 的 *contentSize*确定下来. (contentSize的大小等于containView.size)
-见以下代码:(使用了[[https:https://github.com/PureLayout/PureLayout][PureLayout开源lib)]]
+见以下代码:(使用了 [[https://github.com/purelayout][PureLayout ]] )
 #+BEGIN_EXAMPLE
     [containView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:scrollView];
     [containView autoPinEdge:ALEdgeTop  toEdge:ALEdgeTop  ofView:scrollView];
