@@ -1,6 +1,13 @@
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_HTML
 ---
-title: 纯代码解决UIScrollView 的 AutoLayout
+layout: default
+title: Benighted on the Ben.
+excerpt: An unplanned bivouac on Ben Nevis.
 ---
+#+END_HTML
+
 * 纯代码解决UIScrollView 的 AutoLayout 
 ** UIScrollView的特殊性
    相对于普通的View来说, UIScrollView 的AutoLayout 比较特殊.
