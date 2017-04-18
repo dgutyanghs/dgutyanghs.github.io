@@ -19,7 +19,8 @@ body {
     margin:  3em;
     padding:0 10ex;
     align-self: center;
-    width: 750px;
+    width: 90%;
+    /* width: 750px; */
     border-radius: 1ex;
     padding: 2ex;
     background: #E5F3CA;
