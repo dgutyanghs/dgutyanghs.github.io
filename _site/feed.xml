@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Alex Yang</title>
+    <description>Keep busy living</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 19 Apr 2017 18:10:24 +0800</pubDate>
+    <lastBuildDate>Wed, 19 Apr 2017 18:10:24 +0800</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>纯代码编写UIScrollView 的 AutoLayout</title>
+        <description>&lt;div id=&quot;table-of-contents&quot;&gt;
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;div id=&quot;text-table-of-contents&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#orgf559f0c&quot;&gt;1. 纯代码编写UIScrollView 的 AutoLayout&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#org88fc76a&quot;&gt;1.1. UIScrollView的特殊性&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#org33e4577&quot;&gt;1.2. 解决思路&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#org5d76bc6&quot;&gt;1.2.1. step 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#org12e27e7&quot;&gt;1.2.2. step 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#org2a18a3a&quot;&gt;1.2.3. step 3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#orgcf756ed&quot;&gt;1.2.4. 结语&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;a id=&quot;orgf559f0c&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;纯代码编写uiscrollview-的-autolayout&quot;&gt;纯代码编写UIScrollView 的 AutoLayout&lt;/h1&gt;
+
+&lt;p&gt;&lt;a id=&quot;org88fc76a&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;uiscrollview的特殊性&quot;&gt;UIScrollView的特殊性&lt;/h2&gt;
+
+&lt;p&gt;相对于普通的View来说, UIScrollView 的AutoLayout 比较特殊.
+因为它的 left/right/top/bottom space 是相对于 UIScrollView的 contentSize 而不是 bounds 来确定的.
+如果你尝试用 UIScrollView和它 subview 的left/right/top/bottom 来互相决定大小的时候，
+系统会警告你”Has ambiguous scrollable content width/height”.&lt;/p&gt;
+
+&lt;p&gt;&lt;a id=&quot;org33e4577&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;解决思路&quot;&gt;解决思路&lt;/h2&gt;
+
+&lt;p&gt;&lt;a id=&quot;org5d76bc6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;step-1&quot;&gt;step 1&lt;/h3&gt;
+
+&lt;p&gt;在scrollView和它的subviews之间,先添加一个 containView,
+对齐scrollview的 &lt;strong&gt;top&lt;/strong&gt; &amp;amp; &lt;strong&gt;leading&lt;/strong&gt; 边界,
+ scrollView的 &lt;strong&gt;width&lt;/strong&gt; &amp;amp; &lt;strong&gt;height&lt;/strong&gt; 对齐containView,
+从而使scrollView 的 *contentSize*确定下来. (contentSize的大小等于containView.size)
+见以下代码:(使用了 &lt;a href=&quot;https://github.com/purelayout&quot;&gt;PureLayout &lt;/a&gt; )&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[containView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:scrollView];
+[containView autoPinEdge:ALEdgeTop  toEdge:ALEdgeTop  ofView:scrollView];
+[containView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:scrollView];
+[containView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:scrollView];
+[containView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:scrollView];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;a id=&quot;org12e27e7&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;step-2&quot;&gt;step 2&lt;/h3&gt;
+
+&lt;p&gt;保存下面的NSLayoutConstraint,如果scrollView的宽度变化(如:网络请求回来的内容增加了),则需要更新此约束.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSLayoutConstraint *contentWidthConstraint =  
+   [containView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:scrollView];
+self.contentWidthConstraint = contentWidthConstraint;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;a id=&quot;org2a18a3a&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;step-3&quot;&gt;step 3&lt;/h3&gt;
+
+&lt;p&gt;添加scrollView 和它的superView 约束. 此处的superView为self.view&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[scrollView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.view];
+[scrollView autoPinToBottomLayoutGuideOfViewController:self withInset:0];
+[scrollView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.view];
+[scrollView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.view];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;ok, 大功告成!&lt;/p&gt;
+
+&lt;p&gt;&lt;a id=&quot;orgcf756ed&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;结语&quot;&gt;结语&lt;/h3&gt;
+
+&lt;p&gt;“Talk is cheap, show me the code  – Linus Torvalds “
+使用storyboard来实现的例子,已有方案在网上了.请自行google.
+考虑到大公司里,多人的iOS团队都要求用纯代码开发,OK, 我们不使用storyboard, 用纯代码实现它
+例子代码:&lt;a href=&quot;https://github.com/dgutyanghs/UIScrollView-AutoLayout-NotUse-Storyboard&quot;&gt;https://github.com/dgutyanghs/UIScrollView-AutoLayout-NotUse-Storyboard&lt;/a&gt;
+Have fun!&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 29 Apr 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/04/UIScrollViewAutolayout/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/04/UIScrollViewAutolayout/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

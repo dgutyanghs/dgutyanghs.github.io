@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>纯代码编写UIScrollView 的 AutoLayout</title>
+  <meta name="description" content="Table of Contents1. 纯代码编写UIScrollView 的 AutoLayout1.1. UIScrollView的特殊性1.2. 解决思路1.2.1. step 11.2.2. step 21.2.3. step 31.2.4. 结语">
+  <meta name="author" content="leopardpan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="纯代码编写UIScrollView 的 AutoLayout">
+  <meta name="twitter:description" content="Table of Contents1. 纯代码编写UIScrollView 的 AutoLayout1.1. UIScrollView的特殊性1.2. 解决思路1.2.1. step 11.2.2. step 21.2.3. step 31.2.4. 结语">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="纯代码编写UIScrollView 的 AutoLayout">
+  <meta property="og:description" content="Table of Contents1. 纯代码编写UIScrollView 的 AutoLayout1.1. UIScrollView的特殊性1.2. 解决思路1.2.1. step 11.2.2. step 21.2.3. step 31.2.4. 结语">
+  
+  <link rel="icon" type="image/jpeg" href="/images/favicon.jpeg" />
+  <link href="/images/favicon.jpeg" rel="shortcut icon" type="image/jpeg">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2016/04/UIScrollViewAutolayout/">
+  <link rel="alternate" type="application/rss+xml" title="Alex Yang" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+
+<!-- google 统计 -->
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      标签
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 Alex Yang 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.png" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                        </h2>
+                        <p>
+                           
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Alex Yang" class="blog-button">Alex Yang</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">Coder</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Keep busy living</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">标签</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">纯代码编写UIScrollView 的 AutoLayout</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2016-04-29 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-04-29</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf559f0c">1. 纯代码编写UIScrollView 的 AutoLayout</a>
+<ul>
+<li><a href="#org88fc76a">1.1. UIScrollView的特殊性</a></li>
+<li><a href="#org33e4577">1.2. 解决思路</a>
+<ul>
+<li><a href="#org5d76bc6">1.2.1. step 1</a></li>
+<li><a href="#org12e27e7">1.2.2. step 2</a></li>
+<li><a href="#org2a18a3a">1.2.3. step 3</a></li>
+<li><a href="#orgcf756ed">1.2.4. 结语</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p><a id="orgf559f0c"></a></p>
+
+<h1 id="纯代码编写uiscrollview-的-autolayout">纯代码编写UIScrollView 的 AutoLayout</h1>
+
+<p><a id="org88fc76a"></a></p>
+
+<h2 id="uiscrollview的特殊性">UIScrollView的特殊性</h2>
+
+<p>相对于普通的View来说, UIScrollView 的AutoLayout 比较特殊.
+因为它的 left/right/top/bottom space 是相对于 UIScrollView的 contentSize 而不是 bounds 来确定的.
+如果你尝试用 UIScrollView和它 subview 的left/right/top/bottom 来互相决定大小的时候，
+系统会警告你”Has ambiguous scrollable content width/height”.</p>
+
+<p><a id="org33e4577"></a></p>
+
+<h2 id="解决思路">解决思路</h2>
+
+<p><a id="org5d76bc6"></a></p>
+
+<h3 id="step-1">step 1</h3>
+
+<p>在scrollView和它的subviews之间,先添加一个 containView,
+对齐scrollview的 <strong>top</strong> &amp; <strong>leading</strong> 边界,
+ scrollView的 <strong>width</strong> &amp; <strong>height</strong> 对齐containView,
+从而使scrollView 的 *contentSize*确定下来. (contentSize的大小等于containView.size)
+见以下代码:(使用了 <a href="https://github.com/purelayout">PureLayout </a> )</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[containView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:scrollView];
+[containView autoPinEdge:ALEdgeTop  toEdge:ALEdgeTop  ofView:scrollView];
+[containView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:scrollView];
+[containView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:scrollView];
+[containView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:scrollView];
+</code></pre>
+</div>
+
+<p><a id="org12e27e7"></a></p>
+
+<h3 id="step-2">step 2</h3>
+
+<p>保存下面的NSLayoutConstraint,如果scrollView的宽度变化(如:网络请求回来的内容增加了),则需要更新此约束.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>NSLayoutConstraint *contentWidthConstraint =  
+   [containView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:scrollView];
+self.contentWidthConstraint = contentWidthConstraint;
+</code></pre>
+</div>
+
+<p><a id="org2a18a3a"></a></p>
+
+<h3 id="step-3">step 3</h3>
+
+<p>添加scrollView 和它的superView 约束. 此处的superView为self.view</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[scrollView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.view];
+[scrollView autoPinToBottomLayoutGuideOfViewController:self withInset:0];
+[scrollView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.view];
+[scrollView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.view];
+</code></pre>
+</div>
+
+<p>ok, 大功告成!</p>
+
+<p><a id="orgcf756ed"></a></p>
+
+<h3 id="结语">结语</h3>
+
+<p>“Talk is cheap, show me the code  – Linus Torvalds “
+使用storyboard来实现的例子,已有方案在网上了.请自行google.
+考虑到大公司里,多人的iOS团队都要求用纯代码开发,OK, 我们不使用storyboard, 用纯代码实现它
+例子代码:<a href="https://github.com/dgutyanghs/UIScrollView-AutoLayout-NotUse-Storyboard">https://github.com/dgutyanghs/UIScrollView-AutoLayout-NotUse-Storyboard</a>
+Have fun!</p>
+
+
+
+  </section>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">    
+                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/dgutyanghs" title="@dgutyanghs 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+
+          <!-- RSS -->
+          <!-- <li class="navigation__item_social"> -->
+          <!-- <a href="/feed.xml" rel="author" title="RSS" target="_blank"> -->
+          <!-- <i class='social fa fa-rss fa-2x'></i> -->
+          <!-- <span class="label">RSS</span> -->
+          <!-- </a> -->
+          <!-- </li> -->
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:dgutyang@gmail.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+            <!-- <p class="copyright text-muted"> -->
+            <!-- Copyright &copy; Alex Yang 2017 Theme by <a href="http://baixin.io/">leopardpan</a> | -->
+            <!-- <iframe -->
+            <!-- style="margin-left: 2px; margin-bottom:-5px;" -->
+            <!-- frameborder="0" scrolling="0" width="91px" height="20px" -->
+            <!-- src="https://ghbtns.com/github-btn.html?user=leopardpan&repo=leopardpan.github.io&type=star&count=true" > -->
+            <!-- </iframe> -->
+            <!-- </p> -->
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <!-- <span id="busuanzi_container_site_pv"> -->
+          <!-- 本站总访问量 -->
+          <!-- <span id="busuanzi_value_site_pv"></span>次 -->
+          <!-- </span> -->
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

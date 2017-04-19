@@ -1,75 +1,40 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/png"   href="{{site.baseurl}}/ref/yangyang.png"/>
-        <title>{{ page.title }}</title>
-        <link href="{{site.baseurl}}/ref/main.css" rel="stylesheet"/>
-        <link href="{{site.baseurl}}/ref/prettify.css" rel="stylesheet"/>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <script src="{{site.baseurl}}/ref/prettify.js"></script>
-        <style type="text/css">
-            .nolink{
-                text-decoration:none;
-            }
-            table,#content>pre,.highlighter-rouge{
-                align-self: center;
-            }
-        </style>
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-          tex2jax: {inlineMath: [['$','$'],['\(','\)']]},
-          TeX: { equationNumbers: { autoNumber: "all" } }
-          });
-        </script>
-       <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-        </script>
+<html>
 
-        <script>
-         /* var tagMap={*/
-         /* "日志":"diary",*/
-         /* "编程":"program",*/
-         /* "经济":"economic",*/
-         /* "读书":"read",*/
-         /* "哲学":"philosophy",*/
-         /* };*/
-        </script>
-    </head>
-    <body>
-        <header>
-            <a id='home' href="{{site.baseurl}}/">
-                <i class="fa fa-home fa-2x" style="color:white;"></i>
-            </a>
-            <nav id="head">
-            {% for tag in page.tags %}
-                <script>
-                    var code ='<a style="background:white;display:inline;"';
-                    code += 'href="{{site.baseurl}}/#'+tagMap["{{tag}}"]+'" ';
-                    code +='title="点击查看更多有关 {{tag}} 的内容"><i class="fa fa-tag"></i>{{tag}}</a>';
-                    document.write(code);
-                </script>
+  {% include head.html %}
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="{{site.blog_button.description}}" class="blog-button">  {{site.blog_button.title}}
+              </a>
+            </i>
+            {% for item in site.nav %}
+                <i class="nav-menu-item">
+
+                  <a href="{{item.url}}" title="{{item.description}}" class="btn-mobile-menu__icon">
+                      {{item.title}}
+                  </a>
+                </i>
             {% endfor %}
-            </nav>
-            <a href="{{site.baseurl}}/diary.html" style="color: black;">Diary</a>
-        </header>
-        <h1 style="margin-top: 3ex;">{{page.title}}</h1>
-        <div style="align-self: center;">
-            <span style="padding-right:5ex;">发表时间：{{ page.date| date:"%Y-%m-%d" }}</span>
-            <span style="padding-right:5ex;">作者:{{page.author}}</span>
-            <span>约<span id="counter"><i class="fa fa-spinner fa-spin"></i></span>字</span>
+          </nav>
+      </div>
+    </span>
+    
+    {% include side-panel.html %}
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            {{ content }}
+            {% include footer.html %}
         </div>
-        <div id="content">
-            {{ content}}
-        </div>
-        <script>
-            var codes = document.querySelectorAll("pre>code");
-            for(var i=0;i<codes.length;++i){
-                var code = codes[i];
-                code.setAttribute("class","prettyprint linenums");
-                prettyPrint();
-            }
-            var content_length=document.querySelector("#content").innerText.length;
-            document.querySelector("#counter").innerHTML=""+(content_length-content_length%100);
-        </script>
-    </body>
+    </div>
+    
+    {% include external.html %}
+    
+  </body>
+
 </html>

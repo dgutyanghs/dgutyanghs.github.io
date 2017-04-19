@@ -1,88 +1,34 @@
 ---
-title: AlexYang's Blog
+layout: default
 ---
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8" />
-    <title>{{ page.title }}</title>
-    <link href="{{site.baseurl}}/ref/main.css" rel="stylesheet"/>
-    <link rel="icon" type="image/png"   href="{{site.baseurl}}/ref/note.jpeg"/>
-    <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
-    <style>
-        li.listing-item{
-            margin: 1.5ex 0;
-        }
-        li.listing-item>a{
-            text-decoration: initial;
-        }
-    </style>
-    <script>
-        var tagMap={
-        "日志":"diary",
-        "编程":"program",
-        "经济":"economic",
-        "读书":"read",
-        "哲学":"philosophy",
-        };
-    </script> 
-</head>
-<body>
-    <header>
-        <a id='home' href="{{site.baseurl}}/" style="color:white;font-size:2em;text-decoration:initial;">
-            <i class="fa fa-home" ></i></a>
-        <span style="color:white;">{{page.title}}</span>
-        <a href="./diary.html" style="color: black;">Diary</a>
-    </header>
-    <div id="content" style="align-items:left; display:flex;">
-        <ul style="list-style-type:none;display:table;">
-            {% for post in paginator.posts %}
-            <script>
-                var code='<li class="listing-item ';
-                var tags="{{ post.tags|join|strip }}".split(" ");
-                for(var i=0;i<tags.length;++i){
-                    code += tagMap[tags[i]]+" ";
-                }
-                code += '"> \n'
-                code +=' <a href="//{{site.hostname}}{{ site.baseurl }}{{ post.url }}"\n';
-                code +='    title="关于[{{post.tags|join|strip}}],发表于{{post.date | date:'%Y-%m-%d'}}" >{{ post.title }} </a>\n'
-                code +='</li>';
-                document.write(code);
-            </script>
-            {% endfor %}
-        </ul>
-        <div style="display: flex;justify-content: space-between;width: 90%;" >
-            {%if paginator.previous_page %}
-            <a href="{{site.baseurl}}{{ paginator.previous_page_path }}" style="text-decoration:initial;" class="previous">上<i class="fa fa-hand-o-left"></i>页</a>
-          {% else %}
-            <span class="previous"><i class="fa fa-hand-paper-o" style="color:red"></i></span>
-          {% endif %}
-          <span class="page_number ">{{ paginator.page }}/{{ paginator.total_pages }}</span>
-          {% if paginator.next_page %}
-            <a href="{{site.baseurl}}{{ paginator.next_page_path }}" style="text-decoration:initial;" class="next">下<i class="fa fa-hand-o-right"></i>页</a>
-          {% else %}
-            <span class="next "><i class="fa fa fa-hand-paper-o" style="color:red"></i></span>
-          {% endif %}
+
+<div class="main-post-list hidden">
+
+  <ol class="post-list">
+    {% for post in paginator.posts %}
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="{{ post.url }}" title="访问 {{ post.title }}">{{ post.title }}</a></h2>
+      <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
+      <div class="post-list__meta">        
+        <time datetime="{{post.date | date: date_to_xmlschema}}" class="post-list__meta--date date">
+          <img src="/images/calendar.png" width="20px" /> 
+          {{ post.date | date: "%F"}}</time> 
+        <div class = "tag-img-icon">
+          <img src="/images/tag-icon.svg" width="20px" /> 
         </div>
-    </div>
-    <script>
-        var hashCode=window.location.hash;
-        if(hashCode != ''){
-            var node=document.querySelector("a.previous");
-            if(null != node){
-                node.href += hashCode;
-            }
-            node=document.querySelector("a.next");
-            if(null != node){
-                node.href += hashCode;
-            }
-            hashCode=hashCode.slice(1,hashCode.length);
-            var lisNotCode=document.querySelectorAll("li:not(."+hashCode+")");
-            for(var i=0;i<lisNotCode.length;++i){
-                var li = lisNotCode[i];
-                li.style.display="none";
-            }
-        }
-    </script>
-</body>
-</html>
+        <a href="/tags">
+          <div class = "post-list-icon-mate">
+            <span class="post-list__meta--tags-right">{{ post.tags }}</span>
+          </div>
+          <div class = "post-list-small-mate">
+          <a class="btn-border-small" href={{ post.url }}>阅读全文 » </a>
+          </div>
+      </div>
+      <hr class="post-list__divider" />
+    </li>
+    {% endfor %}
+  </ol>
+
+  {% include pagination.html %}
+
+</div>
