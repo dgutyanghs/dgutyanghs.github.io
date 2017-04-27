@@ -1,0 +1,10 @@
+* BLE笔记
+** BEL的广播信道
+ channel :37 ---> 2402 MHz
+ channel :39 ---> 2480 MHz
+ channel :38 ---> 2402 + 12(与37间隔数) * 2(信道的space) = 2426 MHz
+ Perpheral的广播信道可以只用其中1个,也可全用. 一般来说都会全用,方便Central扫描.
+
+** 广播间隔
+
+   
