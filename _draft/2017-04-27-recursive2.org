@@ -54,7 +54,8 @@ factorial_iterator(3, 20)往下面步骤演算,依然能得到正确的结果.
 *总结*
 两种方法的时间复杂度都是O(n).
 方法1:factorial(x),思路清晰,当x值很大时,会产生栈空间溢出.
-方法2:factorial_iterator(x,result),不会栈空间. 但笔者在python3.5的环境下测试x=1000时, 却也是报错:
+方法2:factorial_iterator(x,result),进行了迭代改良，不会持续增长栈空间. 但笔者在python3.5的环境下测试x=1000时,
+却也出现报错:
 #+BEGIN_EXAMPLE
 RuntimeError: maximum recursion depth exceeded
 #+END_EXAMPLE
