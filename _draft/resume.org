@@ -127,5 +127,18 @@
 
 
 
+*** 专业技能
+扎实的C语言基础， 熟悉Objective-c , 了解swift，python 
 
+熟悉Linux环境Shell操作命令, 自己搭建的阿里云服务器， 为App"[[https://itunes.apple.com/us/app/zhong-gu-gang-qin-da-quan/id1192492032?mt=8][中古钢琴大全]] "数据RESTfull接口 . 
+
+了解HTML+CSS，自己的搭建过 [[https://dgutyanghs.github.io][博客 ]]网页。
+
+嵌入式硬件的基础知识。 
+
+熟练在Git环境下进行团队协作开发.
+
+熟悉常用的软件设计模式。 
+
+英语4级，能轻松应对英文技术文档 
 
