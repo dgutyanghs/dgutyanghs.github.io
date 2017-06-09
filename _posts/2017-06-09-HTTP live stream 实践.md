@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HTTP Live Streaming (HLS)实践
+title: HTTP Live Streaming实践(HLS)
 date: 2017-06-09 
 tag: iOS
 ---
@@ -8,29 +8,30 @@ tag: iOS
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc939e83">1. HTTP Live Streaming (HLS)实践</a>
+<li><a href="#orge244456">1. HTTP Live Streaming (HLS)实践</a>
 <ul>
-<li><a href="#orgab48e70">1.1. HTTP Live Streaming的作用</a></li>
-<li><a href="#org227a0fa">1.2. HLS的组成</a>
+<li><a href="#orgb9ab1e4">1.1. HTTP Live Streaming的作用</a></li>
+<li><a href="#org184dcc8">1.2. HLS的组成</a>
 <ul>
-<li><a href="#org1af4c48">1.2.1. M3U8文件</a></li>
-<li><a href="#org809cec0">1.2.2. TS 文件</a></li>
+<li><a href="#orgf8c6bbc">1.2.1. M3U8文件</a></li>
+<li><a href="#org5daff67">1.2.2. TS 文件</a></li>
 </ul>
 </li>
-<li><a href="#org9dcb6e8">1.3. Nginx服务器的配置</a></li>
-<li><a href="#org659737b">1.4. iOS HLS 播发</a></li>
+<li><a href="#org82001a0">1.3. Nginx服务器的配置</a></li>
+<li><a href="#org9cd0a00">1.4. iOS HLS 播发</a></li>
+<li><a href="#orgfa7c6eb">1.5. 中古钢琴大全App</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<a id="orgc939e83"></a>
+<a id="orge244456"></a>
 
 # HTTP Live Streaming (HLS)实践
 
 
-<a id="orgab48e70"></a>
+<a id="orgb9ab1e4"></a>
 
 ## HTTP Live Streaming的作用
 
@@ -42,14 +43,14 @@ HTTP Live Streaming以不同的比特率支持多个备用流，客户端软件�
 HTTP Live Streaming还通过HTTPS提供媒体加密和用户认证，从而允许发布商保护他们的工作。
 
 
-<a id="org227a0fa"></a>
+<a id="org184dcc8"></a>
 
 ## HLS的组成
 
 HLS基于HTTP协议实现，传输内容包括两部分，一是M3U8描述文件，二是TS媒体文件。
 
 
-<a id="org1af4c48"></a>
+<a id="orgf8c6bbc"></a>
 
 ### M3U8文件
 
@@ -77,7 +78,7 @@ HLS基于HTTP协议实现，传输内容包括两部分，一是M3U8描述文件
 文件中 "#EXT-X-TARGETDURATION:" 用于指定最大的媒体段时间长度（sencond）, #EXTINF中指定的时间长度必须 <= 这个最大值.
 
 
-<a id="org809cec0"></a>
+<a id="org5daff67"></a>
 
 ### TS 文件
 
@@ -114,7 +115,7 @@ HLS基于HTTP协议实现，传输内容包括两部分，一是M3U8描述文件
         上面的命令将bosendorfer.mp4文件生成 m3u8和TS文件。
 
 
-<a id="org9dcb6e8"></a>
+<a id="org82001a0"></a>
 
 ## Nginx服务器的配置
 
@@ -135,7 +136,7 @@ HLS基于HTTP协议实现，传输内容包括两部分，一是M3U8描述文件
 用 safari浏览器可正常播发视频。
 
 
-<a id="org659737b"></a>
+<a id="org9cd0a00"></a>
 
 ## iOS HLS 播发
 
@@ -161,4 +162,11 @@ HLS基于HTTP协议实现，传输内容包括两部分，一是M3U8描述文件
             // Dispose of any resources that can be recreated.
         }
     }
+
+
+<a id="orgfa7c6eb"></a>
+
+## 中古钢琴大全App
+
+[中古钢琴大全](https://itunes.apple.com/cn/app/%25E4%25B8%25AD%25E5%258F%25A4%25E9%2592%25A2%25E7%2590%25B4%25E5%25A4%25A7%25E5%2585%25A8/id1192492032?mt=8) 的钢琴介绍视频，都是用此HLS搭建，如果喜欢，请好评。
 
