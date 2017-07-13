@@ -1,0 +1,13 @@
+* “RxBluetoothKit” -- iOS蓝牙的高效简洁框架(-)
+
+** 函数响应式编程（FRP）的兴起
+*** ReactiveX
+一个大家庭，RxSwift,RxPy,RxKotlin,RxJava ...,[[http://reactivex.io/][ReactiveX官网]] .
+observer pattern一种扩展，很好地简化程序设计。
+
+*** RxSwift
+RxSwift也一样，程序中有各种变量当你受不了
+*** RxBluetoothKit
+
+** RxBluetoothKit的蓝牙Scan
+
