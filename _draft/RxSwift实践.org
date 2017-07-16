@@ -3,9 +3,16 @@
 ** 函数响应式编程（FRP）的兴起
 *** ReactiveX
 ReactiveX是一个大家庭，RxSwift,RxPy,RxKotlin,RxJava ...,[[http://reactivex.io/][ReactiveX官网]] .
-observer pattern一种扩展，很好地简化程序设计。
-关于RxSwift的基础知识，和优点请浏览官网
+作为iOS的开发者，相信大家都很熟悉通知中心："NotificationCenter.default"，这个是UIKit中帮我们实现好的观察者模式（observer pattern）。
+我们通过NotificationCenter.default.post(notification)向订阅者发送通知。
+
+RxSwift对观察者模式进行了扩展，很好地简化程序设计。RxSwift最重要的三个类型： =Observable= （可被观察者／Event发出者）,  =Observer= （观察者／Event接收者）,  =Subject= （Observer + Observable／既能发送Event，也能接收）.
+所谓响应式，事件发生时， =Observable= 就会发出Event消息， =Observer= 接收到订阅的Event后，可对事件进行加工处理.做出回应。 
+关于更多RxSwift的基础知识，和优点请浏览官网
 ** 实践例子
+   Flashmob 小Demo，本来打算上架后再开源，但Apple的审核者拒绝了2次，第一次理由是：不支持IPv6，我修复后提交，第二次理由时：“只有视频下载和播放，浏览器也能办到”。还邮件警告说以后再提交如此简单的App，
+   将封号.... 想必Apple的审核者，都是开发高手！！！唉，苦了我那几天熬夜搭建的视频服务器。
+
    实现功能：1.视频列表展示; 2.视频下载; 3.播放。下面简述程序，请先下载源代码。
 *** RxCocoa神奇tableView中的绑定 
 平时我用UITableView,总要手动声明遵守相关的Protocol:UITableViewDataSource, UITableViewDelegate. 
@@ -201,7 +208,7 @@ tableView.rx.itemSelected
 #+END_SRC
 
 *** https 访问限制的应对方法 
-    如果你的服务器有正规的https证书的，不用考虑此步骤。笔者的服务器证书是自己生成的。（OpenSSL）
+    如果你的服务器有正规的https证书的，不用考虑此步骤。
 **** 修改你App项目中的Info.plist文件，添加以下项 
 #+BEGIN_SRC xml
 <key>NSAppTransportSecurity</key>
@@ -278,6 +285,8 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 #+END_SRC
 至此，你的App的Https网络访问问题解决。
 
+**** 笔者的新服务器
+为了解决第一次IPv6被拒，笔者的新服务器架到国外了。带宽高速度快,居然还比国内的VPS要便宜，域名和SSL证书也都申请完成，成正规军了。不用再为HTTPS的问题烦恼了。各位看官，买VPS时，货比3家。
 
 *** 总结
 Function Reactive  Programming （FRP)的方式编程，难点在于理解Event流和对各种数据的操作，变换。
