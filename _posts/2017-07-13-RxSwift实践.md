@@ -8,21 +8,21 @@ tag: iOS
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org65a3852">1. RxSwift的实践</a>
+<li><a href="#orgd8c7279">1. RxSwift的实践</a>
 <ul>
-<li><a href="#org974de37">1.1. 函数响应式编程（FRP）的兴起</a>
+<li><a href="#org577bcd0">1.1. 函数响应式编程（FRP）的兴起</a>
 <ul>
-<li><a href="#orgbbbc278">1.1.1. ReactiveX</a></li>
+<li><a href="#org787932e">1.1.1. ReactiveX</a></li>
 </ul>
 </li>
-<li><a href="#org0a5ccad">1.2. 实践例子</a>
+<li><a href="#orgb931400">1.2. 实践例子</a>
 <ul>
-<li><a href="#orgaf79710">1.2.1. RxCocoa神奇tableView中的绑定</a></li>
-<li><a href="#orgd20d2a0">1.2.2. Variable类型</a></li>
-<li><a href="#org9ea9a90">1.2.3. 视频下载的Progress进度更新</a></li>
-<li><a href="#org653f933">1.2.4. Event的变换和合并</a></li>
-<li><a href="#org5b8c463">1.2.5. https 访问限制的应对方法</a></li>
-<li><a href="#org4b230dc">1.2.6. 总结</a></li>
+<li><a href="#org179fc71">1.2.1. RxCocoa神奇tableView中的绑定</a></li>
+<li><a href="#orgd5ee82e">1.2.2. Variable类型</a></li>
+<li><a href="#org12c2e7c">1.2.3. 视频下载的Progress进度更新</a></li>
+<li><a href="#orgc156863">1.2.4. Event的变换和合并</a></li>
+<li><a href="#orga7fbbba">1.2.5. https 访问限制的应对方法</a></li>
+<li><a href="#org2cf8ee3">1.2.6. 总结</a></li>
 </ul>
 </li>
 </ul>
@@ -31,17 +31,17 @@ tag: iOS
 </div>
 </div>
 
-<a id="org65a3852"></a>
+<a id="orgd8c7279"></a>
 
 # RxSwift的实践
 
 
-<a id="org974de37"></a>
+<a id="org577bcd0"></a>
 
 ## 函数响应式编程（FRP）的兴起
 
 
-<a id="orgbbbc278"></a>
+<a id="org787932e"></a>
 
 ### ReactiveX
 
@@ -54,7 +54,7 @@ RxSwift对观察者模式进行了扩展，很好地简化程序设计。RxSwift
 关于更多RxSwift的基础知识，和优点请浏览官网
 
 
-<a id="org0a5ccad"></a>
+<a id="orgb931400"></a>
 
 ## 实践例子
 
@@ -64,7 +64,7 @@ Flashmob 小Demo，本来打算上架后再开源，但Apple的审核者拒绝�
 实现功能：1.视频列表展示; 2.视频下载; 3.播放。下面简述程序，请先下载源代码。
 
 
-<a id="orgaf79710"></a>
+<a id="org179fc71"></a>
 
 ### RxCocoa神奇tableView中的绑定
 
@@ -129,7 +129,7 @@ bindto 函数：
     public func bind<O>(to observer: O) -> Disposable where O : ObserverType, O.E == Self.E
 
 
-<a id="orgd20d2a0"></a>
+<a id="orgd5ee82e"></a>
 
 ### Variable类型
 
@@ -178,7 +178,7 @@ Subject类型既能作Observable，也能作Observer。
 videoArray既是Observer,也是Observable，当它收到更新时，会自动触发Observable，将自己的value全部发送。 
 
 
-<a id="org9ea9a90"></a>
+<a id="org12c2e7c"></a>
 
 ### 视频下载的Progress进度更新
 
@@ -209,7 +209,7 @@ videoArray既是Observer,也是Observable，当它收到更新时，会自动触
     ///onNext更新进度，onCompleted更新UI，保存数据。
 
 
-<a id="org653f933"></a>
+<a id="orgc156863"></a>
 
 ### Event的变换和合并
 
@@ -261,7 +261,7 @@ RxCocoa中，当用户点击选择UITableViewCell时，会触发两个Observable
     }).addDisposableTo(bag)
 
 
-<a id="org5b8c463"></a>
+<a id="orga7fbbba"></a>
 
 ### https 访问限制的应对方法
 
@@ -348,11 +348,12 @@ RxCocoa中，当用户点击选择UITableViewCell时，会触发两个Observable
     为了解决第一次IPv6被拒，笔者的新服务器架到国外了。带宽高速度快,居然还比国内的VPS要便宜，域名和SSL证书也都申请完成，成正规军了。不用再为HTTPS的问题烦恼了。各位看官，买VPS时，货比3家。
 
 
-<a id="org4b230dc"></a>
+<a id="org2cf8ee3"></a>
 
 ### 总结
 
 Function Reactive  Programming （FRP)的方式编程，难点在于理解Event流和对各种数据的操作，变换。
 对以往命令式编程是一种颠覆。
 代表先进的生产力；代表广大码农的前进方向；&#x2026;.
+[Flashmob](https://github.com/dgutyanghs/Flashmob) 的源码，喜欢的请支持star一下，你的支持是对笔者的鼓舞。谢谢������
 
