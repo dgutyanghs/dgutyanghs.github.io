@@ -1,0 +1,4 @@
+* PHP 学习笔记
+** Homestead 安装
+   由于下载virtaulbox较慢，推荐学网友本地安装。
+   [[https://www.codecasts.com/blog/post/vagrant-add-homestead-locally][转载]]
